@@ -17,25 +17,35 @@ def generate_valid_plates():
 
     return valid_plates
 
+#  Export plates to excel in batches
+
+def export_plates_to_excel(plates, filename):
+    wb = Workbook()
+    ws = wb.active
+    ws.append(['Number Plate'])
+    for plate in plates:
+        ws.append([plate])
+    wb.save(filename)
+
+batch_size = 10000  # Adjust the batch size as needed
 start_time = time.time()
-valid_plates = generate_valid_plates()
+total_valid_plates = 0
+batch_number = 1
+
+while True:
+    batch_plates = generate_valid_plates()[:batch_size]
+    if not batch_plates:
+        break
+    
+    export_filename = f'valid_number_plates_batch{batch_number}.xlsx'
+    export_plates_to_excel(batch_plates, export_filename)
+    
+    total_valid_plates += len(batch_plates)
+    print(f"Exported {len(batch_plates)} plates to {export_filename}")
+    
+    batch_number += 1
+
 end_time = time.time()
 
-total_valid_plates = len(valid_plates)
-
-# Export valid plates to an Excel file
-wb = Workbook()
-ws = wb.active
-ws.append(['Number Plate'])
-for plate in valid_plates:
-    ws.append([plate])
-
-wb.save('valid_number_plates.xlsx')
-
-for plate in valid_plates:
-    print(plate)
-
-execution_time_minutes = (end_time - start_time) / 60
 print(f"Total valid plates: {total_valid_plates}")
-print(f"Total execution time (minutes): {execution_time_minutes:.2f} minutes")
-print("Number plates exported to 'valid_number_plates.xlsx'")
+print(f"Total execution time (minutes): {(end_time - start_time) / 60:.2f} minutes")
