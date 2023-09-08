@@ -27,7 +27,7 @@ def export_plates_to_excel(plates, filename):
         ws.append([plate])
     wb.save(filename)
 
-batch_size = 10000  # Adjust the batch size as needed
+batch_size = 1000000  # Adjust the batch size as needed
 start_time = time.time()
 total_valid_plates = 0
 batch_number = 1
