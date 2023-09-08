@@ -1,4 +1,5 @@
 import time
+from openpyxl import Workbook
 
 def generate_valid_plates():
     valid_plates = []
@@ -22,9 +23,19 @@ end_time = time.time()
 
 total_valid_plates = len(valid_plates)
 
+# Export valid plates to an Excel file
+wb = Workbook()
+ws = wb.active
+ws.append(['Number Plate'])
+for plate in valid_plates:
+    ws.append([plate])
+
+wb.save('valid_number_plates.xlsx')
+
 for plate in valid_plates:
     print(plate)
 
 execution_time_minutes = (end_time - start_time) / 60
 print(f"Total valid plates: {total_valid_plates}")
 print(f"Total execution time (minutes): {execution_time_minutes:.2f} minutes")
+print("Number plates exported to 'valid_number_plates.xlsx'")
