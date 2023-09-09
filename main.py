@@ -12,7 +12,7 @@ def generate_valid_plates():
                         for number3 in range(10):
                             for letter4 in range(ord('A'), ord('Z') + 1):
                                 plate = f"{chr(letter1)}{chr(letter2)}{chr(letter3)} {number1}{number2}{number3}{chr(letter4)}"
-                                if "000" not in plate and not plate.startswith("KDF"):
+                                if "000" not in plate and not plate.startswith("KDF") and not plate.startswith("KBC"):
                                     valid_plates.append(plate)
 
     return valid_plates
